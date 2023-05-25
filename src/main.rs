@@ -7,10 +7,26 @@ async fn main() {
     let mut cam = Camera::new()
         .origin_screen_pos(vec2((win.window_width / 2) as f32, (win.window_height / 2) as f32));
 
+    let mut mouse_pos = mouse_position();
     loop {
         clear_background(WHITE);
 
-        // Grid rendering, assumes that the origin in onscreen and isn't very concise or optimized
+        // Input handling
+        let cur_mouse_pos = mouse_position();
+        let mouse_pos_delta = (cur_mouse_pos.0 - mouse_pos.0, cur_mouse_pos.1 - mouse_pos.1);
+
+        if is_mouse_button_down(MouseButton::Right) {
+            cam.origin_screen_pos += vec2(
+                mouse_pos_delta.0,
+                mouse_pos_delta.1
+            );
+        }
+
+        mouse_pos = cur_mouse_pos;
+
+        // Grid rendering, assumes that the origin in on-screen and isn't very concise or optimized
+        // The grid is properly rendered when origin in off-screen, but grid cells off-screen in the
+        // origin's direction are still rendered. Not performant! 😭
         // TODO: Improve robustness
         let pos_dif_down = (win.window_height as f32 - cam.origin_screen_pos.y);
         for y in 0..(pos_dif_down / cam.unit_pixel_size as f32).floor() as i32 {
