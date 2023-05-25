@@ -111,7 +111,7 @@ async fn main() {
 
 fn window_conf() -> Conf {
     Conf {
-        window_title: String::from("title"),
+        window_title: String::from("Grid Edit"),
         window_width: 600,
         window_height: 600,
         ..Default::default()
