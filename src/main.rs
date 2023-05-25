@@ -28,7 +28,7 @@ async fn main() {
         // The grid is properly rendered when origin in off-screen, but grid cells off-screen in the
         // origin's direction are (probably) still handled. Not performant! 😭
         // TODO: Improve robustness
-        let pos_dif_down = (win.window_height as f32 - cam.origin_screen_pos.y);
+        let pos_dif_down = win.window_height as f32 - cam.origin_screen_pos.y;
         for y in 0..(pos_dif_down / cam.unit_pixel_size as f32).floor() as i32 {
             let y_pos = cam.origin_screen_pos.y + cam.unit_pixel_size as f32 * (y + 1) as f32;
             draw_line(
@@ -54,7 +54,7 @@ async fn main() {
             );
         }
 
-        let pos_dif_right = (win.window_width as f32 - cam.origin_screen_pos.x);
+        let pos_dif_right = win.window_width as f32 - cam.origin_screen_pos.x;
         for x in 0..(pos_dif_right / cam.unit_pixel_size as f32).floor() as i32 {
             let x_pos = cam.origin_screen_pos.x + cam.unit_pixel_size as f32 * (x + 1) as f32;
             draw_line(
