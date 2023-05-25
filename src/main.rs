@@ -10,6 +10,59 @@ async fn main() {
     loop {
         clear_background(WHITE);
 
+        // Grid rendering, assumes that the origin in onscreen and isn't very concise or optimized
+        // TODO: Improve robustness
+        let pos_dif_down = (win.window_height as f32 - cam.origin_screen_pos.y);
+        for y in 0..(pos_dif_down / cam.unit_pixel_size as f32).floor() as i32 {
+            let y_pos = cam.origin_screen_pos.y + cam.unit_pixel_size as f32 * (y + 1) as f32;
+            draw_line(
+                0.,
+                y_pos,
+                win.window_width as f32,
+                y_pos,
+                1.,
+                LIGHTGRAY
+            );
+        }
+        drop(pos_dif_down);
+
+        for y in 0..(cam.origin_screen_pos.y / cam.unit_pixel_size as f32).floor() as i32 {
+            let y_pos = cam.origin_screen_pos.y - cam.unit_pixel_size as f32 * (y + 1) as f32;
+            draw_line(
+                0.,
+                y_pos,
+                win.window_width as f32,
+                y_pos,
+                1.,
+                LIGHTGRAY
+            );
+        }
+
+        let pos_dif_right = (win.window_width as f32 - cam.origin_screen_pos.x);
+        for x in 0..(pos_dif_right / cam.unit_pixel_size as f32).floor() as i32 {
+            let x_pos = cam.origin_screen_pos.x + cam.unit_pixel_size as f32 * (x + 1) as f32;
+            draw_line(
+                x_pos,
+                0.,
+                x_pos,
+                win.window_height as f32,
+                1.,
+                LIGHTGRAY
+            );
+        }
+        drop(pos_dif_right);
+
+        for y in 0..(cam.origin_screen_pos.x / cam.unit_pixel_size as f32).floor() as i32 {
+            let x_pos = cam.origin_screen_pos.x - cam.unit_pixel_size as f32 * (y + 1) as f32;
+            draw_line(
+                x_pos,
+                0.,
+                x_pos,
+                win.window_height as f32,
+                1.,
+                LIGHTGRAY
+            );
+        }
 
         // Draw origin markers
         draw_line(
@@ -17,16 +70,16 @@ async fn main() {
             cam.origin_screen_pos.y,
             win.window_width as f32,
             cam.origin_screen_pos.y,
-            1.,
-            GRAY
+            2.,
+            RED
         );
         draw_line(
             cam.origin_screen_pos.x,
             0.,
             cam.origin_screen_pos.x,
             win.window_height as f32,
-            1.,
-            GRAY
+            2.,
+            DARKGREEN
         );
         draw_circle(
             cam.origin_screen_pos.x,
