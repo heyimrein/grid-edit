@@ -30,7 +30,7 @@ async fn main() {
         // TODO: Improve robustness
         let pos_dif_down = win.window_height as f32 - cam.origin_screen_pos.y;
         for y in 0..(pos_dif_down / cam.unit_pixel_size as f32).floor() as i32 {
-            let y_pos = cam.origin_screen_pos.y + cam.unit_pixel_size as f32 * (y + 1) as f32;
+            let y_pos = cam.origin_screen_pos.y + cam.unit_pixel_size as f32 * (y + 1) as f32 + 0.5;
             draw_line(
                 0.,
                 y_pos,
@@ -43,7 +43,7 @@ async fn main() {
         drop(pos_dif_down);
 
         for y in 0..(cam.origin_screen_pos.y / cam.unit_pixel_size as f32).floor() as i32 {
-            let y_pos = cam.origin_screen_pos.y - cam.unit_pixel_size as f32 * (y + 1) as f32;
+            let y_pos = cam.origin_screen_pos.y - cam.unit_pixel_size as f32 * (y + 1) as f32 + 0.5;
             draw_line(
                 0.,
                 y_pos,
@@ -56,7 +56,7 @@ async fn main() {
 
         let pos_dif_right = win.window_width as f32 - cam.origin_screen_pos.x;
         for x in 0..(pos_dif_right / cam.unit_pixel_size as f32).floor() as i32 {
-            let x_pos = cam.origin_screen_pos.x + cam.unit_pixel_size as f32 * (x + 1) as f32;
+            let x_pos = cam.origin_screen_pos.x + cam.unit_pixel_size as f32 * (x + 1) as f32 + 0.5;
             draw_line(
                 x_pos,
                 0.,
@@ -69,7 +69,7 @@ async fn main() {
         drop(pos_dif_right);
 
         for y in 0..(cam.origin_screen_pos.x / cam.unit_pixel_size as f32).floor() as i32 {
-            let x_pos = cam.origin_screen_pos.x - cam.unit_pixel_size as f32 * (y + 1) as f32;
+            let x_pos = cam.origin_screen_pos.x - cam.unit_pixel_size as f32 * (y + 1) as f32 + 0.5;
             draw_line(
                 x_pos,
                 0.,
@@ -83,23 +83,23 @@ async fn main() {
         // Draw origin markers
         draw_line(
             0.,
-            cam.origin_screen_pos.y,
+            cam.origin_screen_pos.y.round(),
             win.window_width as f32,
-            cam.origin_screen_pos.y,
+            cam.origin_screen_pos.y.round(),
             2.,
             RED
         );
         draw_line(
-            cam.origin_screen_pos.x,
+            cam.origin_screen_pos.x.round(),
             0.,
-            cam.origin_screen_pos.x,
+            cam.origin_screen_pos.x.round(),
             win.window_height as f32,
             2.,
             DARKGREEN
         );
         draw_circle(
-            cam.origin_screen_pos.x,
-            cam.origin_screen_pos.y,
+            cam.origin_screen_pos.x.round(),
+            cam.origin_screen_pos.y.round(),
             2.,
             BLACK
         );
